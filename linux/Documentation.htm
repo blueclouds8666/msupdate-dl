@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!-- html document written and revised by NEONFLOPPY. 2021 -->
+
+<html>
+	<head>
+		<meta content="Documentation">
+		<title>Documentation</title>
+		
+		<style>
+		<!-- trickery needed for netscape -->
+		body, td, th, p, ol, ul, dl, dt, dd, h1, h2, h3, h4 {
+			font-family: arial, helvetica, liberation sans, freesans, sans-serif;
+		}
+		body {
+			font-family: arial, helvetica, liberation sans, freesans, sans-serif;
+		}
+		</style>
+	</head>
+
+	<body>
+		<h1>Microsoft Update Downloader: Documentation</h1>
+		<hr>
+			
+		<h2>Index of contents:</h2>
+		<ol>
+			<li>Introduction</li>
+			<li>Requirements</li>
+			<li>Operation Guide</li>
+			<li>Arguments</li>
+			<li>Use examples</li>
+			<li>Common problems &amp; solutions</li>
+			<li>License</li>
+			<li>Additional information</li>
+		</ol>
+		<br>
+		<hr>
+		
+		<br>
+		<h2>1. Introduction:</h2>
+		<p>Microsoft Update Downloader is a PowerShell script designed to allow easy file download for updates and hotfixes from the Microsoft Update Catalog, featuring multiple options and filters to enable users do the task more efficiently. This document will guide you through the process of understanding the operation of this program, allowing you to fully benefit from the advantages it offers. The following process does not assume users advanced knowledge with computers, but having moderate experience with the command prompt or the Linux terminal is advised. </p>
+		
+		<br>
+		<h2>2. Requirements:</h2>
+		<p><b>Windows users:</b></p>
+		<ul>
+			<li>Windows 7 with SP1 (32 and 64 bits) or later</li>
+			<li>PowerShell 3.0 or later</li>
+			<li>NET Framework 4.0</li>
+			<li>DigiCert Global Root G2 Certificate</li>
+			<li>GNU Wget</li>
+		</ul>		
+		<p><b>Linux users:</b></p>
+		<ul>
+			<li>Linux kernel 3.13 (AMD64, ARM32 and ARM64) or later</li>
+			<li>PowerShell 6.0 or later</li>
+			<li>DigiCert Global Root G2 Certificate</li>
+			<li>GNU Wget</li>
+		</ul>
+		<p>A copy of wget is already included with the regular Windows release. If you instead have a copy of the source code, you will need to place a copy of the wget binaries corresponding to your operating system architecture inside the wget folder, located beside the scripts. You will need to install .NET Framework 4.0 before installing PowerShell as it is a requirement of the latter. The DigiCert certificate is required to connect with the Microsoft Update Catalog website. Windows users can easily install certificates by double clicking the certificate file, clicking on "Install Certificate..." and following the wizard. Make sure you install the certificate inside the "Trusted Root Certification Authorities" certificate store. Windows 8 and 8.1 users don't need to install NET Framework 4.0 or PowerShell 3.0 as they already come preinstalled with the operating system.</p>
+		<p>Linux distributions typically include GNU Wget and the aforementioned certificate. However, if any of those aren't present on the system, you will need to install them as they are essential requirements. The process of installing said elements under Linux varies between distributions. Please refer to your Linux distribution documentation for a proper how-to guide.</p>
+		
+		<br>
+		<h2>3. Operation Guide:</h2>
+		<p>First step is opening the PowerShell console. Windows users can find an icon at Start Menu, All Programs, Accessories, Windows PowerShell, and Windows PowerShell, while Linux users can start it by running the <i>pwsh</i> command from a terminal window.</p>
+		<p>Once it's opened, navigate to the folder where the .ps1 scripts are located. That can easily be done using the <i>cd</i> command. If you are unfamiliar with the operation of the <i>cd</i> command, please refer to a MS-DOS or UNIX manual. Once you are located in the right working directory, you can finally execute the script. There are two different scripts you can use, each one serving different purposes.</p>
+		
+		<p>The regular script has the following syntax:</p>
+		<dl>
+			<dd><b>MSUpdate-DL.ps1 <font color="#B2B2B2"><i>[REQUEST] [OPTIONS]</i></font></b></dd>
+		</dl>
+		<p>Another script allows downloading multiple updates at once. The script reads an input text file (MSUpdate-DL-Batch-List.txt) where all requests are listed, one per line. The text file is already populated with 16 entries as an example, but you may want to delete those and fill it in with your own update requests. The syntax of the script is as follows:</p>
+		<dl>
+			<dd><b>MSUpdate-DL-Batch.ps1 <font color="#B2B2B2"><i>[OPTIONS]</i></font></b></dd>
+		</dl>
+		<p>Fields between brackets refer to arguments, whereby you can adjust the script behavior. Valid arguments are covered in the next section.</p>
+		
+		<br>
+		<h2>4. Arguments:</h2>
+		<table border="1" cellpadding="5" cellspacing="5">
+			<tr>
+				<td><b><u>Argument</u></b></td>
+				<td><b><u>Description</u></b></td>
+			</tr>
+			<tr>
+				<td width="190"><font color="#B2B2B2"><b><i>REQUEST</i></b></font></td>
+				<td>Specify the update to be downloaded with the Microsoft Knowledge Base code number (KB). This argument is required and must always come first.</td>
+			</tr>
+			<tr>
+				<td>-details</td>
+				<td>Download a copy of the update details sheet in html format. This is disabled by default, but can be enabled by using this argument.</td>
+			</tr>
+			<tr>
+				<td>-architecture="<font color="#B2B2B2"><b><i>VALUE</i></b></font>"</td>
+				<td>Filter updates by operating system processor architecture. By default, MSUpdate-DL will download updates applicable for all architecture, but you may use this argument if you wish to only download updates for a certain architecture or subset of architectures. Values can be concatenated between commas, and those valid are:
+				
+				<table>
+					<tr>
+						<td width="80" align="right"><b>all</b></td>
+						<td width="10"></td>
+						<td>all architectures</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>32</b></td>
+						<td width="10"></td>
+						<td>x86 32 bits</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>64</b></td>
+						<td width="10"></td>
+						<td>x86 64 bits</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>itanium</b></td>
+						<td width="10"></td>
+						<td>Intel Itanium</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td>-ntversion="<font color="#B2B2B2"><b><i>VALUE</i></b></font>"</td>
+				<td>Filter updates by Windows NT version. By default, MSUpdate-DL will download updates applicable for all Windows versions, but you may use this argument if you wish to only download updates for a certain Windows version, or a subset of Windows versions. Values can be concatenated between commas, and those valid are:
+				
+				<table>
+					<tr>
+						<td width="80" align="right"><b>all</b></td>
+						<td width="10"></td>
+						<td>all Windows versions</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>50</b></td>
+						<td width="10"></td>
+						<td>Windows 2000</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>51</b></td>
+						<td width="10"></td>
+						<td>Windows XP</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>52</b></td>
+						<td width="10"></td>
+						<td>Windows XP x64 Edition, Windows Server 2003</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>60</b></td>
+						<td width="10"></td>
+						<td>Windows Vista, Windows Server 2008</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>61</b></td>
+						<td width="10"></td>
+						<td>Windows 7, Windows Server 2008 R2</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>62</b></td>
+						<td width="10"></td>
+						<td>Windows 8, Windows Server 2012</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>63</b></td>
+						<td width="10"></td>
+						<td>Windows 8.1, Windows Server 2012 R2</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td>-language="<font color="#B2B2B2"><b><i>VALUE</i></b></font>"</td>
+				<td>Filter updates by language. By default, MSUpdate-DL will download updates for any language available, but you may use this argument if you wish to only download updates for a certain language or subset of languages. Values can be concatenated between commas, and those valid are:
+				
+				<table>
+					<tr>
+						<td width="80" align="right"><b>jpn</b></td>
+						<td width="10"></td>
+						<td>Japanase</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>chs</b></td>
+						<td width="10"></td>
+						<td>Chinese (Traditional)</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>cht</b></td>
+						<td width="10"></td>
+						<td>Chinese (Simplified)</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>deu</b></td>
+						<td width="10"></td>
+						<td>German</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>kor</b></td>
+						<td width="10"></td>
+						<td>Korean</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>ara</b></td>
+						<td width="10"></td>
+						<td>Arabic</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>fin</b></td>
+						<td width="10"></td>
+						<td>Finnish</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>plk</b></td>
+						<td width="10"></td>
+						<td>Polish</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>nor</b></td>
+						<td width="10"></td>
+						<td>Norwegian</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>ptb</b></td>
+						<td width="10"></td>
+						<td>Portuguese (Brazil)</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>ptg</b></td>
+						<td width="10"></td>
+						<td>Portuguese (Portugal)</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>fra</b></td>
+						<td width="10"></td>
+						<td>French</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>dan</b></td>
+						<td width="10"></td>
+						<td>Danish</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>ell</b></td>
+						<td width="10"></td>
+						<td>Greek</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>csy</b></td>
+						<td width="10"></td>
+						<td>Czech</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>trk</b></td>
+						<td width="10"></td>
+						<td>Turkish</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>rus</b></td>
+						<td width="10"></td>
+						<td>Russian</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>esn</b></td>
+						<td width="10"></td>
+						<td>Spanish</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>ita</b></td>
+						<td width="10"></td>
+						<td>Italian</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>hun</b></td>
+						<td width="10"></td>
+						<td>Hungarian</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>nld</b></td>
+						<td width="10"></td>
+						<td>Dutch</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>heb</b></td>
+						<td width="10"></td>
+						<td>Hebrew</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>sve</b></td>
+						<td width="10"></td>
+						<td>Swedish</td>
+					</tr>
+					<tr>
+						<td width="80" align="right"><b>enu</b></td>
+						<td width="10"></td>
+						<td>English</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td>-output="<font color="#B2B2B2"><b><i>VALUE</i></b></font>"</td>
+				<td>Specify a different output folder to locate the downloaded files. By default, it's set to "C:\msupdate-dl\" on Windows, and "\home\(username)\msupdate-dl\" on Linux. You can change that by using this argument and setting a valid absolute path as the value field. Make sure your current user has read and write access to specified path.</td>
+			</tr>
+			<tr>
+				<td>-version</td>
+				<td>Display on console the program version.</td>
+			</tr>
+			<tr>
+				<td>-help</td>
+				<td>Display on console a brief help information regarding this program.</td>
+			</tr>
+			<tr>
+				<td>-log</td>
+				<td>Enable download process logging. Log information is stored into a text file inside the logs folder, right beside the scripts. This behavior is disabled by default. Log information allows you to debug the script behavior and check if the task was sucessfully completed.</td>
+			</tr>
+		</table>
+		
+		<p></p><br>
+		<h2>5. Use examples:</h2>
+		<p>Download all files for the KB951376 update, as well as the details sheets:</p>
+		<dl>
+			<dd><b>MSUpdate-DL.ps1 KB951376 -details</b></dd>
+		</dl>
+		
+		<p>Download the english version file for the KB951376 update, and log the process:</p>
+		<dl>
+			<dd><b>MSUpdate-DL.ps1 KB951376 -language="enu" -log</b></dd>
+		</dl>
+		
+		<p>Download the KB951376 update, but only the files corresponding to Windows XP and Vista:</p>
+		<dl>
+			<dd><b>MSUpdate-DL.ps1 KB951376 -ntversion="51,60"</b></dd>
+		</dl>
+		
+		<p>Batch download updates to an external drive with the details files:</p>
+		<dl>
+			<dd><b>MSUpdate-DL-Batch.ps1 -output="E:\backup\updates\" -details</b></dd>
+		</dl>
+		
+		<p>Batch download updates only for the itanium versions of Windows Server 2003, 2008 and 2008 R2:</p>
+		<dl>
+			<dd><b>MSUpdate-DL-Batch.ps1 -architecture="itanium" -ntversion="52,60,61"</b></dd>
+		</dl>
+		
+		<p>Batch download updates only those in english, german or french, only for Windows Vista x64, and log the process:</p>
+		<dl>
+			<dd><b>MSUpdate-DL-Batch.ps1 -language="enu,deu,fra" -ntversion="60" -architecture="64" -log</b></dd>
+		</dl>
+		
+		<br>
+		<h2>6. Common problems &amp; solutions:</h2>
+		<p>Trying to run MSUpdate-DL from the PowerShell returns the error message "script cannot be loaded because the execution of scripts is disabled on this system":</p>
+		<p> </p>
+		<ul>
+		<li>PowerShell has unsigned script execution disabled by default for security reasons. Unsigned script execution can easily be enabled by executing the following command while running an instance with administrator/root privileges: <i>Set-ExecutionPolicy RemoteSigned</i></li>
+		</ul>
+		
+		<p>Trying to run MSUpdate-DL from the AppImage version of Linux PowerShell results in several error messages:</p>
+		<ul>
+		<li>The AppImage version of PowerShell has some bugs not present on the regular version. Please install PowerShell by regular means.</li>
+		</ul>
+		
+		<p>Unexpected behavior from the script happens while following all the operation guidelines correctly:</p>
+		<ul>
+		<li>Please make sure you are running the script in compilance of all the requirements previously covered in this document. Make sure your computer has enough resources to run the script (system memory, hard drive space...) and no application is interfering with the functioning of the script. Alternatively, try running the script on a closed environment, such as a virtual machine. If the problem still persist, a bug might be a cause of the problem. Report the bug if applicable (the program is still supported by the original developer).</li>
+		</ul>
+		
+		<p>While running the script, wget is unable to retrieve all or some of the files, repeatedly showing the error message "Unable to establish SSL connection":</p>
+		<ul>
+		<li>There might be multiple causes for this to happen. The system date and time might be incorrect, the specified certificate might have been installed incorrectly, or some of the wget dependencies might not be present or misconfigured.</li>
+		</ul>
+		
+		
+		<br>
+		<h2>7. License:</h2>
+		<p>This project has been published and distributed under the Unlicense license. The documentation is also made available under the same license.</p>
+		<p>This is free and unencumbered software released into the public domain.</p>
+
+		<p>Anyone is free to copy, modify, publish, use, compile, sell, or
+		distribute this software, either in source code form or as a compiled
+		binary, for any purpose, commercial or non-commercial, and by any
+		means.</p>
+
+		<p>In jurisdictions that recognize copyright laws, the author or authors
+		of this software dedicate any and all copyright interest in the
+		software to the public domain. We make this dedication for the benefit
+		of the public at large and to the detriment of our heirs and
+		successors. We intend this dedication to be an overt act of
+		relinquishment in perpetuity of all present and future rights to this
+		software under copyright law.</p>
+
+		<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+		EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+		MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+		IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+		OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+		ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+		OTHER DEALINGS IN THE SOFTWARE.</p>
+
+		<p>For more information, please refer to <a href="http://unlicense.org">http://unlicense.org</a></p>
+		
+		<br>
+		<h2>8. Additional information:</h2>
+		<p>For a correct visualization of this document, use a CSS 1.0 and HTML 3.2 standard compatible browser, such as Internet Explorer 4.0, Netscape Communicator 4.0, Opera Browser 3.50, or newer iterations of those mentioned. This document has been tested to pass the World Wide Web Consortium Markup Validation for HTML 3.2. Project and documentation made by NEONFLOPPY. <a href="http://neonfloppy.sytes.net">http://neonfloppy.sytes.net</a>. First published in 2021.</p>
+		<br>
+	</body>
+</html>
