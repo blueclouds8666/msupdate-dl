@@ -9,7 +9,7 @@ Microsoft Update Downloader is a PowerShell script designed to allow easy file d
 #### Windows users
 - Windows 7 with SP1 (32 and 64 bits) or later
 - PowerShell 3.0 or later
-- NET Framework 4.0
+- NET Framework 4.5
 - DigiCert Global Root G2 Certificate
 - GNU Wget (already included with release versions)
 
@@ -69,7 +69,7 @@ Batch download updates only those in english, german or french, only for Windows
 - [DigiCert Global Root G2 Certificate](https://cacerts.digicert.com/DigiCertGlobalRootG2.crt)
 - [PowerShell 3.0](https://www.microsoft.com/en-us/download/details.aspx?id=34595)
 - [PowerShell 6.0](https://github.com/PowerShell/PowerShell/releases/tag/v6.0.0)
-- [NET Framework 4.0](https://www.microsoft.com/en-US/download/details.aspx?id=17718)
+- [NET Framework 4.5](https://www.microsoft.com/en-US/download/details.aspx?id=40779)
 - [GNU Wget for Windows](https://eternallybored.org/misc/wget/)
 - [GNU Wget for Linux](https://www.gnu.org/software/wget/)
 
