@@ -37,14 +37,23 @@ function MSUpdate-DL-Batch
 			Write-Host "by NEONFLOPPY. http://neonfloppy.sytes.net`r`n" -ForegroundColor White
 			Write-Host "This project has been published under the Unlincense license. https://unlicense.org" -ForegroundColor White
 			Write-Host "This is free software: you are free to change and redistribute it`r`n" -ForegroundColor White
-		return
-	}
+			return
+		}
+		if ($parameter -match "-timeout=") {
+			$time = $parameter.Substring(9)
+			$timeout = $true
+		}
 	}
 	
 	foreach ($line in $list) {
 		$count++
 		Write-Host "[INFO] Update $count of $elements" -ForegroundColor Green -BackgroundColor Black
 		./MSUpdate-DL.ps1 $line $param[0] $param[1] $param[2] $param[3] $param[4] $param[5]
+		
+		if ($timeout -eq $true) {
+			Write-Host "[INFO] Timeout for $time seconds" -ForegroundColor Green -BackgroundColor Black
+			Start-Sleep -s $time
+		}
 	}
 }
 MSUpdate-DL-Batch
