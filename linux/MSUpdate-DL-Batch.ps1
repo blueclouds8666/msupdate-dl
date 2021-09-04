@@ -28,6 +28,7 @@ function MSUpdate-DL-Batch
 			Write-Host "    -version       (display program version)" -ForegroundColor White
 			Write-Host "    -help          (display help introduction)" -ForegroundColor White
 			Write-Host "    -log           (enable debug file logging)" -ForegroundColor White
+			Write-Host "    -timeout       (enable timeout between downloads)" -ForegroundColor White
 			Write-Host "For a complete operation guide, refer to documentation.htm`r`n" -ForegroundColor White
 			return
 		}
