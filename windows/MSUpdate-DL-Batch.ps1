@@ -6,7 +6,7 @@
 	License:    Unlicense (https://unlicense.org)
 #>
 
-$param = @($args[0],$args[1],$args[2],$args[3],$args[4],$args[5])
+$param = @($args[0],$args[1],$args[2],$args[3],$args[4],$args[5],$args[6])
 
 function MSUpdate-DL-Batch
 {
@@ -49,7 +49,7 @@ function MSUpdate-DL-Batch
 	foreach ($line in $list) {
 		$count++
 		Write-Host "[INFO] Update $count of $elements" -ForegroundColor Green -BackgroundColor Black
-		.\MSUpdate-DL.ps1 $line $param[0] $param[1] $param[2] $param[3] $param[4] $param[5]
+		.\MSUpdate-DL.ps1 $line $param[0] $param[1] $param[2] $param[3] $param[4] $param[5] $param[6]
 		
 		if ($timeout -eq $true) {
 			Write-Host "[INFO] Timeout for $time seconds" -ForegroundColor Green -BackgroundColor Black
