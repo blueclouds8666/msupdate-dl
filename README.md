@@ -40,6 +40,7 @@ REQUEST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
 -version | show script version
 -help | show brief help information
 -log | enable logging to a text file
+-timeout="VALUE" | enable timeout between downloads
 
 #### Complete documentation:
 Please refer to documentation.htm for a complete operation guide. Make sure to read and understand the documentation before using the script. This markdown section only serves as a brief introduction to this script.
