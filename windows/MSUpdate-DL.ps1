@@ -124,7 +124,7 @@ function MSUpdate-DL
 	}
 	
 	# send query to the update catalog website for specified request
-	$kbObj = Invoke-WebRequest -Uri "http://www.catalog.update.microsoft.com/Search.aspx?q=$request"
+	$kbObj = Invoke-WebRequest -Uri "https://www.catalog.update.microsoft.com/Search.aspx?q=$request"
 	$Available_KBIDs = $kbObj.InputFields |
 	Where-Object { $_.type -eq 'Button' -and $_.Value -eq 'Download' } |
 	Select-Object -ExpandProperty ID
@@ -159,12 +159,12 @@ function MSUpdate-DL
 			New-Item -ItemType Directory -Force -Path $infodir | Out-Null
 		}
 		if ($logging -eq $true) {
-			$out = -join((Get-Date).ToString(), "  ", "[INFO] Downloading html details page: http://www.catalog.update.microsoft.com/Search.aspx?q=", $request)
+			$out = -join((Get-Date).ToString(), "  ", "[INFO] Downloading html details page: https://www.catalog.update.microsoft.com/Search.aspx?q=", $request)
 			Add-Content -Force -Encoding UTF8 -Path $logfile -Value $out
 		}
 		
 		# call the HTTP retriever. wget used in this project
-		wget\wget.exe http://www.catalog.update.microsoft.com/Search.aspx?q=$request --user-agent="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; InfoPath.2)" --output-document $infofile
+		wget\wget.exe https://www.catalog.update.microsoft.com/Search.aspx?q=$request --user-agent="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; InfoPath.2)" --output-document $infofile
 		
 		# resources inside the html file point to external websites. we want a fully offline copy. resource addresses are changed to local ones
 		(Get-Content -Path $infofile) -replace 'href="Style/catalog.css', 'href="html_files/styles/catalog.css' | 
@@ -283,7 +283,7 @@ function MSUpdate-DL
 		# do a query to the download dialog page with current element identifier code
 		$Post = @{ size = 0; updateID = $kbGUID; uidInfo = $kbGUID } | ConvertTo-Json -Compress
 		$PostBody = @{ updateIDs = "[$Post]" }
-		Invoke-WebRequest -Uri 'http://www.catalog.update.microsoft.com/DownloadDialog.aspx' -Method Post -Body $postBody |
+		Invoke-WebRequest -Uri 'https://www.catalog.update.microsoft.com/DownloadDialog.aspx' -Method Post -Body $postBody |
 		Select-Object -ExpandProperty Content |
 		# select all the URLs present on query result
 		Select-String -AllMatches -Pattern "(http[s]?)(:\/\/)([^\s,]+)(?=')" |
