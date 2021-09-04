@@ -6,6 +6,9 @@
 	License:    Unlicense (https://unlicense.org)
 #>
 
+# force enable TLS 1.2 connections in PowerShell 3.0 and later
+[System.Net.ServicePointManager]::SecurityProtocol = [Enum]::ToObject([System.Net.SecurityProtocolType], 3072);
+
 $param = @($args[0],$args[1],$args[2],$args[3],$args[4],$args[5],$args[6])
 
 function MSUpdate-DL
