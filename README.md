@@ -32,15 +32,19 @@ A second script allows for a batch download, reading lines from MSUpdate-DL-Batc
 Argument | Description
 --- | ---
 REQUEST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| KB update number to download. This field is required and must always come first.
--details | download a details sheet for each update in html format
--architecture="VALUE" | filter files by OS architecture. valid values are: all, 32, 64, itanium
--ntversion="VALUE" | filter files by Windows NT version. valid values are: 50, 51, 52, 60, 61...
--language="VALUE" | filter files by language. valid values are: enu, fra, ita, jpn, rus...
--output="VALUE" | specify a different output directory (default is C:\msupdate-dl\ on Windows, and \home\username\msupdate-dl\ on Linux)
--version | show script version
--help | show brief help information
--log | enable logging to a text file
--timeout="VALUE" | enable timeout between downloads
+--details | download a details sheet for each update in html format
+--architecture="VALUE" | filter files by OS architecture. valid values are: all, 32, 64, itanium
+--ntversion="VALUE" | filter files by Windows NT version. valid values are: 50, 51, 52, 60, 61...
+--language="VALUE" | filter files by language. valid values are: enu, fra, ita, jpn, rus...
+--retry-policy="VALUE" | specify the retry on error policy: normal or aggressive
+--retry-timeout="VALUE" | specify the timeout between retries on seconds
+--retry-number="VALUE" | specify the number of retries on error: any number or infinity
+--output="VALUE" | specify a different output directory (default is C:\msupdate-dl\ on Windows, and \home\username\msupdate-dl\ on Linux)
+--double-check | enable strict check of language update files
+--version | show script version
+--help | show brief help information
+--log | enable logging to a text file
+--timeout="VALUE" | enable timeout between downloads
 
 #### Complete documentation:
 Please refer to documentation.htm for a complete operation guide. Make sure to read and understand the documentation before using the script. This markdown section only serves as a brief introduction to this script.
@@ -64,9 +68,7 @@ Batch download updates only those in english, german or french, only for Windows
 
 ## Download resources
 
-- [MSUpdate-DL latest release for Win32](https://github.com/blueclouds8666/msupdate-dl/releases/download/1.00/msupdate-dl-windows-i686.7z)
-- [MSUpdate-DL latest release for Win64](https://github.com/blueclouds8666/msupdate-dl/releases/download/1.00/msupdate-dl-windows-AMD64.7z)
-- [MSUpdate-DL latest release for Linux](https://github.com/blueclouds8666/msupdate-dl/releases/download/1.00/msupdate-dl-linux.7z)
+- [MSUpdate-DL latest release](https://github.com/blueclouds8666/msupdate-dl/releases/latest)
 - [DigiCert Global Root G2 Certificate](https://cacerts.digicert.com/DigiCertGlobalRootG2.crt)
 - [PowerShell 3.0](https://www.microsoft.com/en-us/download/details.aspx?id=34595)
 - [PowerShell 6.0](https://github.com/PowerShell/PowerShell/releases/tag/v6.0.0)
@@ -83,7 +85,7 @@ GitHub name | Email address
 --- | ---
 blueclouds8666 | blueclouds8666@mail.com 
 
-MSUpdate-DL has been brought to you by the NEONFLOPPY Team. Check our website at [neonfloppy.sytes.net](http://neonfloppy.sytes.net)
+MSUpdate-DL has been brought to you by NEONFLOPPY. Check our website at [neonfloppy.sytes.net](http://neonfloppy.sytes.net)
 
 <br />
  
