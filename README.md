@@ -55,13 +55,13 @@ Please refer to documentation.htm for a complete operation guide. Make sure to r
 ## Use examples
 
 Download the english version file for the KB951376 update, and log the process:
-> MSUpdate-DL.ps1 KB951376 -language="enu" -log
+> MSUpdate-DL.ps1 KB951376 --language="enu" --log
 
 Batch download updates to an external drive with the details files:
-> MSUpdate-DL-Batch.ps1 -output="E:\backup\updates\" -details
+> MSUpdate-DL-Batch.ps1 --output="E:\backup\updates\" --details
 
 Batch download updates only those in english, german or french, only for Windows Vista x64, and log the process:
-> MSUpdate-DL-Batch.ps1 -language="enu,deu,fra" -ntversion="60" -architecture="64" -log
+> MSUpdate-DL-Batch.ps1 --language="enu,deu,fra" --ntversion="60" --architecture="64" --log
 
 <br />
 
