@@ -2,7 +2,7 @@
 	Appname:	Microsoft Update Downloader
 	Author:		NEONFLOPPY
 	Website:	http://neonfloppy.sytes.net
-	Version:	Release 1.02 - Published: 14 May 2023
+	Version:	Release 1.03 - Published: 26 Jan 2024
 	License:    Unlicense (https://unlicense.org)
 #>
 
@@ -154,8 +154,16 @@ function MSUpdate-DL
 		}
 		
 		if ($parameter -match "--output=") {
-			$basedir = $parameter.substring(8)
-			$outdir = -join($basedir, $request, "\")
+			$basedir = $parameter.substring(9)
+			
+			# check if the path ends with a slash
+			if ($string -match '\\$') {
+				$outdir = -join($basedir, $request, "\")
+			
+			# if it doesn't, we need to add one
+			} else {
+				$outdir = -join($basedir, "\", $request, "\")
+			}
 		}
 		
 		if ($parameter -match "--log") {
@@ -197,7 +205,7 @@ function MSUpdate-DL
 	# show version information
 	if ($request -eq "--version") {
 		Write-Host "Microsoft Update Downloader" -ForegroundColor Cyan -BackgroundColor Black
-		Write-Host "Release 1.02 - 14 May 2023" -ForegroundColor Magenta -BackgroundColor Black
+		Write-Host "Release 1.03 - 26 Jan 2024" -ForegroundColor Magenta -BackgroundColor Black
 		Write-Host "by NEONFLOPPY. http://neonfloppy.sytes.net`r`n" -ForegroundColor White
 		Write-Host "This project has been published under the Unlincense license. https://unlicense.org" -ForegroundColor White
 		Write-Host "This is free software: you are free to change and redistribute it`r`n" -ForegroundColor White
@@ -231,7 +239,13 @@ function MSUpdate-DL
 		
 		# get the html contents of the query, in order to check the actual textual response
 		$doc = $kbObj.ParsedHtml
-		$div = $doc.getElementById("ctl00_catalogBody_noResults")
+		
+		# check if the html page includes kb update results
+		if ([regex]::matches($kbObj, "ctl00_catalogBody_noResults").count -ne 0) {
+			$div = $true
+		} else {
+			$div = $null
+		}
 		
 		# check if the html contains an item not found message
 		if ($div -ne $null) {
@@ -570,6 +584,13 @@ function MSUpdate-DL
 				}
 			}
 		}
+	}
+	
+	# if the output directory is empty, we get rid of it
+	if ((Get-ChildItem -Path $outdir).Count -eq 0) {
+		$msg = "[INFO] No update files found matching the specified filters"
+		Write-Host $msg -ForegroundColor Green -BackgroundColor Black
+		Remove-Item -Path $outdir
 	}
 }
 MSUpdate-DL

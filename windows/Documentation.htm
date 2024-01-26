@@ -381,32 +381,32 @@
 		<h2>5. Use examples:</h2>
 		<p>Download all files for the KB951376 update, as well as the details sheets:</p>
 		<dl>
-			<dd><b>MSUpdate-DL.ps1 KB951376 -details</b></dd>
+			<dd><b>MSUpdate-DL.ps1 KB951376 --details</b></dd>
 		</dl>
 		
 		<p>Download the English version file for the KB951376 update, and log the process:</p>
 		<dl>
-			<dd><b>MSUpdate-DL.ps1 KB951376 -language="enu" -log</b></dd>
+			<dd><b>MSUpdate-DL.ps1 KB951376 --language="enu" --log</b></dd>
 		</dl>
 		
 		<p>Download the KB951376 update, but only the files corresponding to Windows XP and Vista:</p>
 		<dl>
-			<dd><b>MSUpdate-DL.ps1 KB951376 -ntversion="51,60"</b></dd>
+			<dd><b>MSUpdate-DL.ps1 KB951376 --ntversion="51,60"</b></dd>
 		</dl>
 		
 		<p>Batch download updates to an external drive with the details files:</p>
 		<dl>
-			<dd><b>MSUpdate-DL-Batch.ps1 -output="E:\backup\updates\" -details</b></dd>
+			<dd><b>MSUpdate-DL-Batch.ps1 --output="E:\backup\updates\" --details</b></dd>
 		</dl>
 		
 		<p>Batch download updates only for the itanium versions of Windows Server 2003, 2008 and 2008 R2:</p>
 		<dl>
-			<dd><b>MSUpdate-DL-Batch.ps1 -architecture="itanium" -ntversion="52,60,61"</b></dd>
+			<dd><b>MSUpdate-DL-Batch.ps1 --architecture="itanium" --ntversion="52,60,61"</b></dd>
 		</dl>
 		
 		<p>Batch download updates only those in English, German or French, only for Windows Vista x64, and log the process:</p>
 		<dl>
-			<dd><b>MSUpdate-DL-Batch.ps1 -language="enu,deu,fra" -ntversion="60" -architecture="64" -log</b></dd>
+			<dd><b>MSUpdate-DL-Batch.ps1 --language="enu,deu,fra" --ntversion="60" --architecture="64" --log</b></dd>
 		</dl>
 		
 		<br>

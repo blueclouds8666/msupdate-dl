@@ -2,7 +2,7 @@
 	Appname:	Microsoft Update Downloader
 	Author:		NEONFLOPPY
 	Website:	http://neonfloppy.sytes.net
-	Version:	Release 1.02 - Published: 14 May 2023
+	Version:	Release 1.03 - Published: 26 Jan 2024
 	License:    Unlicense (https://unlicense.org)
 #>
 
@@ -38,7 +38,7 @@ function MSUpdate-DL-Batch
 		}
 		if ($parameter -eq "--version") {
 			Write-Host "Microsoft Update Downloader" -ForegroundColor Cyan -BackgroundColor Black
-			Write-Host "Release 1.02 - 14 May 2023" -ForegroundColor Magenta -BackgroundColor Black
+			Write-Host "Release 1.03 - 26 Jan 2024" -ForegroundColor Magenta -BackgroundColor Black
 			Write-Host "by NEONFLOPPY. http://neonfloppy.sytes.net`r`n" -ForegroundColor White
 			Write-Host "This project has been published under the Unlincense license. https://unlicense.org" -ForegroundColor White
 			Write-Host "This is free software: you are free to change and redistribute it`r`n" -ForegroundColor White
